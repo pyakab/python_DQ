@@ -11,6 +11,7 @@ def create_100_elements_list():  # define the function(method) for creating the 
         n = randint(1, 1000)  # initialized the variable n in the range from 1 to 1000 with the randint function
         randomlist.append(n)  # add the n variable to the list
         i = i + 1  # increment
+    return randomlist
 
 
 def sort_list_elements(list):  # define the function for sorting the the list of 100 random numbers
@@ -25,6 +26,7 @@ def sort_list_elements(list):  # define the function for sorting the the list of
             else:  # if the condition is false, do next
                 j = j + 1  # increase the variable j by 1
         i = i + 1  # increase the variable j by 1
+    return sorted_randomlist
 
 
 def calculate_average(list):  # define the name of the function for calculating the average for odd and even numbers
