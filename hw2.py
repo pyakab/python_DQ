@@ -1,6 +1,7 @@
 import random
 from random import randint, choice  # import library for creating random list
 import string
+import collections
 
 # 1. create a list of random number of dicts (from 2 to 10)
 
@@ -19,10 +20,10 @@ def create_random_collection():
     key_list=[]
     value_list=[]
     letters = string.ascii_lowercase
-    for i in range (0,3):
+    for i in range (0,10):
         x = 0
         random_dict={}
-        while x <3 and len(random_dict)<3:
+        while x <10 and len(random_dict)<10:
             letter_key = random.choice(letters)
             n=randint(0, 100)
             random_dict[letter_key]=n
@@ -41,111 +42,126 @@ def create_common_dictionary(list):
     while i<len(random_dict_list):
         tested_dictionary=random_dict_list[i]
         for key in tested_dictionary:
-            print()
-            if key not in key_list:
-                key_list.append(key)
-            else:
-                pass
-        #key_list.sort()
-        print(key_list)
-        print(len(key_list))
-
-        one_common_list = {}
-        for z in key_list:
-            if z in tested_dictionary and z not in one_common_list:
-                one_common_list[z]=tested_dictionary[z]
-                print(one_common_list)
-            elif z in tested_dictionary and z in one_common_list:
-                print('change')
-                if one_common_list[z]<tested_dictionary[z]:
-                    print('bigger')
-                    key_dict={}
-                    key_one=1
-                    final_key_name = str(z)+"_"+str(i)
-                    key_dict[1]=final_key_name
-                    #print(key_dict)
-                    del one_common_list[z]
-                    one_common_list[final_key_name] = tested_dictionary[z]
-                else:
-                    print('less')
-                    key_dict = {}
-                    key_one = 1
-                    final_key_name = str(z) + "_" + str(i-1)
-                    key_dict[1] = final_key_name
-                    #print(key_dict)
-                    one_common_list[final_key_name] = one_common_list[z]
-                    del one_common_list[z]
-
-                one_common_list[z]=tested_dictionary[z]
-
-            else:
-                #pass
-                print(str(z) + ' not in dictionary ' + str(i))
-            #print(one_common_list)
-        i = i + 1
-    print(one_common_list)
+            #print(tested_dictionary.items())
+            #y=1
+            #while y<len(tested_dictionary_list):
+            #    if tested_dictionary.items() not in
+            key_list.append(key)
+            #if key not in key_list:
+            #    key_list.append(key)
+            #else:
+            #    pass
+        i=i+1
     print(key_list)
     print(len(key_list))
 
-    print(len(one_common_list))
+    duplicates = [item for item, count in collections.Counter(key_list).items() if count > 1]
+    print(duplicates)
+    print(len(duplicates))
+    uniq = set(key_list)
+    #print(uniq)
+    print(len(uniq))
 
-    #print(key_list)
-    #num = 1
-    one_common_list={}
-    #for z in key_list:
-        #print(z)
-        #print(tested_dictionary[z])
-        #while num < 3:
-        #    if z in tested_dictionary:
-        #        print(num)
-        #        print(tested_dictionary[z])
-                # one_common_list[z]=tested_dictionary[z]
-        #    else:
-        #        pass
-        #    num=num+1
+    if len(duplicates) <= 0:
+        one_common_list = {}
 
+        y = 0
+        while y < len(random_dict_list):
+            tested_dictionary = random_dict_list[y]
+            for z in uniq:
+                if z in tested_dictionary:
+                    one_common_list[z] = tested_dictionary[z]
+                    print(one_common_list)
+            y = y + 1
 
-    """while num <=2:
-        for z in key_list:
-            if z in tested_dictionary:
-                print(z)
-                #one_common_list[z]=tested_dictionary[z]
+    else:
+        clear_uniq=[]
+        for x in uniq:
+            if x not in duplicates:
+                clear_uniq.append(x)
             else:
                 pass
-        print(one_common_list)
-        num=num+1
-    print(one_common_list)"""
+        one_common_list = {}
 
-            #new_key=tested_dictionary.keys()
-        #new_key=tested_dictionary.fromkeys(i)
-        #print(new_key)
-        #new_dictionary.append(new_key)
-
-        #j=0
-        #while j<len(tested_dictionary):
-        #    k=j
-        #    print(k)
-        #    print(tested_dictionary[j])
-        #    j=j+1
+        y = 0
+        while y<len(random_dict_list):
+            tested_dictionary=random_dict_list[y]
+            for z in clear_uniq:
+                if z in tested_dictionary:
+                    one_common_list[z] = tested_dictionary[z]
+                    print(one_common_list)
+            y=y+1
 
 
+        for m in duplicates:
+            duplicate_list={}
+            k = 0
+            while k<len(random_dict_list):
+                if m in random_dict_list[k]:
+                    tested_dictionary=random_dict_list[k]
+                    key_dict={}
+                    key_one=1
+                    final_key_name = str(m)+"_"+str(k+1)
+                    #print(final_key_name)
+                    key_dict[1] = final_key_name
+                    print(key_dict[1])
+                    duplicate_list[key_dict[1]] = tested_dictionary[m]
+                    print(duplicate_list)
+                    #if k+1==len(random_dict_list):
+                    #    biggest_key=max(duplicate_list, key=duplicate_list.get)
+                    #    print(biggest_key)
+                    #    one_common_list[biggest_key] = duplicate_list[biggest_key]
+                    #    print(one_common_list)
+                    #else:
+                    #    pass
+
+                else:
+                    pass
+
+                k=k+1
+                if k + 1 == len(random_dict_list):
+                    biggest_key = max(duplicate_list, key=duplicate_list.get)
+                    print(biggest_key)
+                    one_common_list[biggest_key] = duplicate_list[biggest_key]
+                    print(one_common_list)
+                else:
+                    pass
 
 
-    #num = 1
-    #one_common_list = {}
-    #for z in key_list:
-    #    while num <= 10:
-    #        if z in tested_dictionary:
-    #            print(dict.fromkeys(z))
 
-            #else:
-             #   print("Key does not exists in dictionary " + str(num))
-            #num = num + 1
+    #print(clear_uniq)
+    print(len(uniq))
+    print(len(one_common_list))
+    print(one_common_list)
 
 
 
+    #print([item for item, count in collections.Counter(key_list).items() if count > 1])
 
+    #seen = set(key_list)
+    #print(seen)
+    #uniq = []
+    #dupes = []
 
+    #for x in key_list:
+    #    if x in seen:
+
+    #        dupes.append(x)
+    #    else:
+     #       pass
+
+    #print(dupes)
+    #print(seen)
+
+#    one_common_list={}
+
+#    for z in key_list:
+#        y=0
+#        while y<len(random_dict_list):
+#            tested_dictionary = random_dict_list[z]
+#            if z in tested_dictionary and z not in one_common_list:
+#                one_common_list[z] = tested_dictionary[z]
+#                print(one_common_list)
 
 
 
