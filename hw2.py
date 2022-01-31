@@ -1,7 +1,7 @@
 import random   # import random library
 from random import randint, choice  # import library for creating random list
 import string   # import string library
-import collections  # import string library
+import collections  # import collections library
 
 random_dict_list=[]  # initialize list for the dictionary
 
