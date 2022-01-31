@@ -1,158 +1,102 @@
-import random
+import random   # import random library
 from random import randint, choice  # import library for creating random list
-import string
-import collections
+import string   # import string library
+import collections  # import string library
 
-random_dict_list=[]
+random_dict_list=[]  # initialize list for the dictionary
 
-def create_random_collection():
-    key_list=[]
-    value_list=[]
-    letters = string.ascii_lowercase
-    for i in range (0,10):
-        x = 0
-        random_dict={}
-        while x <10 and len(random_dict)<10:
-            letter_key = random.choice(letters)
-            n=randint(0, 100)
-            random_dict[letter_key]=n
-            x = x + 1
-        random_dict_list.append(random_dict)
-        i=i+1
-    print(len(random_dict_list))
-
-
-def create_common_dictionary(list):
-    print(random_dict_list)
-    i=0
-    key_list = []
-    tested_dictionary={}
-
-    while i<len(random_dict_list):
-        tested_dictionary=random_dict_list[i]
-        for key in tested_dictionary:
-            #print(tested_dictionary.items())
-            #y=1
-            #while y<len(tested_dictionary_list):
-            #    if tested_dictionary.items() not in
-            key_list.append(key)
-            #if key not in key_list:
-            #    key_list.append(key)
-            #else:
-            #    pass
-        i=i+1
-    print(key_list)
-    print(len(key_list))
-
-    duplicates = [item for item, count in collections.Counter(key_list).items() if count > 1]
-    print(duplicates)
-    print(len(duplicates))
-    uniq = set(key_list)
-    #print(uniq)
-    print(len(uniq))
-
-    if len(duplicates) <= 0:
-        one_common_list = {}
-
-        y = 0
-        while y < len(random_dict_list):
-            tested_dictionary = random_dict_list[y]
-            for z in uniq:
-                if z in tested_dictionary:
-                    one_common_list[z] = tested_dictionary[z]
-                    print(one_common_list)
-            y = y + 1
-
-    else:
-        clear_uniq=[]
-        for x in uniq:
-            if x not in duplicates:
-                clear_uniq.append(x)
-            else:
-                pass
-        one_common_list = {}
-
-        y = 0
-        while y<len(random_dict_list):
-            tested_dictionary=random_dict_list[y]
-            for z in clear_uniq:
-                if z in tested_dictionary:
-                    one_common_list[z] = tested_dictionary[z]
-                    print(one_common_list)
-            y=y+1
+def create_random_collection(): # define the method for creating the list of 10 random dictionaries
+    key_list=[]  # initialize the list of keys
+    value_list=[]  # initialize the list of values
+    letters = string.ascii_lowercase  # initialized string of lowercase letters
+    for i in range (0,10):  # set the conditions of the loop
+        x = 0  # initialize the x variable, which will be used in the loop
+        random_dict={}  # initialize the dictionary
+        while x <10 and len(random_dict)<10:  # set the conditions of the loop
+            letter_key = random.choice(letters)  # choose any letter from the string of lowercase letters
+            n=randint(0, 100)  # initialize the variable n in the range from 1 to 100 with the randint function
+            random_dict[letter_key]=n  # add item (key and value) to the dictionary
+            x = x + 1  # increase the counter x
+        random_dict_list.append(random_dict)  # add created dictionary to the list
+        i=i+1  # increase the counter i
+    print(random_dict_list)  # print the generated list of dictionary
 
 
-        for m in duplicates:
-            duplicate_list={}
-            k = 0
-            while k<len(random_dict_list):
-                if m in random_dict_list[k]:
-                    tested_dictionary=random_dict_list[k]
-                    key_dict={}
-                    key_one=1
-                    final_key_name = str(m)+"_"+str(k+1)
-                    #print(final_key_name)
-                    key_dict[1] = final_key_name
-                    print(key_dict[1])
-                    duplicate_list[key_dict[1]] = tested_dictionary[m]
-                    print(duplicate_list)
-                    #if k+1==len(random_dict_list):
-                    #    biggest_key=max(duplicate_list, key=duplicate_list.get)
-                    #    print(biggest_key)
-                    #    one_common_list[biggest_key] = duplicate_list[biggest_key]
-                    #    print(one_common_list)
-                    #else:
-                    #    pass
+def create_common_dictionary(list):  # define the method for creating the common dictionary
+    i=0  # initialize the i variable, which will be used in the loop
+    key_list = []  # initialize the list
+    tested_dictionary={}  # initialize the dictionary
 
-                else:
-                    pass
+    while i<len(random_dict_list):  # set the conditions of the loop
+        tested_dictionary=random_dict_list[i]  # set tested_dictionary = [i] dictionary from the random_dict_list
+        for key in tested_dictionary:  # set the conditions of the loop
+            key_list.append(key)  # add the key from the dictionary to the list of keys
+        i=i+1  # increase the counter i
+    #print(key_list)  # print the key_list in console
 
-                k=k+1
-                if k + 1 == len(random_dict_list):
-                    biggest_key = max(duplicate_list, key=duplicate_list.get)
-                    print(biggest_key)
-                    one_common_list[biggest_key] = duplicate_list[biggest_key]
-                    print(one_common_list)
-                else:
-                    pass
+    duplicates = [item for item, count in collections.Counter(key_list).items() if count > 1]  # add to the duplicates list keys that are repeated in the key_list
+    #print(duplicates)  # print the duplicates list in console
+    uniq = set(key_list)  # clear the key_list from duplicates
 
+    if len(duplicates) <= 0:  # the condition for checking if duplicates list is empty
+        one_common_list = {}  # initialize list for the all keys in the random_dict_list
 
+        y = 0  # initialize the y variable, which will be used in the loop
+        while y < len(random_dict_list):  # set the conditions of the loop
+            tested_dictionary = random_dict_list[y]  # set tested_dictionary = [y] dictionary from the random_dict_list
+            for z in uniq:  # set the conditions of the loop
+                if z in tested_dictionary:  # the condition for checking if keys is in the [y] dictionary
+                    one_common_list[z] = tested_dictionary[z]  # add item (key and value) to the one_common_list dictionary
 
-    #print(clear_uniq)
-    print(len(uniq))
-    print(len(one_common_list))
-    print(one_common_list)
+            y = y + 1  # # increase the counter y
 
+    else:  # if condition is false
+        clear_uniq=[]  # initialize list for unique keys
+        for x in uniq:  # set the condition of the loop
+            if x not in duplicates:  # the condition for checking if key is in the duplicates list
+                clear_uniq.append(x)  # if condition is true, add key to the clear_uniq list
+            else:  # if condition is false
+                pass  # do nothing
+        one_common_list = {}  # initialize list for the all keys in the random_dict_list
 
+        y = 0  # initialize the y variable, which will be used in the loop
+        while y<len(random_dict_list):  # set the condition of the loop
+            tested_dictionary=random_dict_list[y]  # set tested_dictionary = [y] dictionary from the random_dict_list
+            for z in clear_uniq:  # set the condition of the loop
+                if z in tested_dictionary:  # the condition for checking if keys is in the [y] dictionary
+                    one_common_list[z] = tested_dictionary[z]  # add item (key and value) to the one_common_list dictionary
 
-    #print([item for item, count in collections.Counter(key_list).items() if count > 1])
-
-    #seen = set(key_list)
-    #print(seen)
-    #uniq = []
-    #dupes = []
-
-    #for x in key_list:
-    #    if x in seen:
-
-    #        dupes.append(x)
-    #    else:
-     #       pass
-
-    #print(dupes)
-    #print(seen)
-
-#    one_common_list={}
-
-#    for z in key_list:
-#        y=0
-#        while y<len(random_dict_list):
-#            tested_dictionary = random_dict_list[z]
-#            if z in tested_dictionary and z not in one_common_list:
-#                one_common_list[z] = tested_dictionary[z]
-#                print(one_common_list)
+            y=y+1  # increase the counter y
 
 
+        for m in duplicates:  # set the condition of the loop
+            duplicate_list={}  # initialize the dictionary for the repeated key
+            k = 0  # initialize the k variable, which will be used in the loop
 
-create_random_collection()
-create_common_dictionary(random_dict_list)
+            while k<len(random_dict_list):  # set the condition of the loop
+                if m in random_dict_list[k]:  # the condition for checking if key is in the k-dictionary in the random_dict_list
+                    tested_dictionary=random_dict_list[k]  # set tested_dictionary = [y] dictionary from the random_dict_list
+                    final_key_name = str(m)+"_"+str(k+1)  # set the final_key_name as concat m and (k+1) variables
+                    duplicate_list[final_key_name] = tested_dictionary[m] # add item (key and value) to the one_common_list dictionary
+
+
+                else:  # if condition is false
+                    pass  # do nothing
+
+                k=k+1  # increase the counter k
+                if k == len(random_dict_list):  # check if the k = the length of list
+                    biggest_key = max(duplicate_list, key=duplicate_list.get)  # get the key with the biggest value from the duplicate_list dictionary
+                    # print(biggest_key)
+                    one_common_list[biggest_key] = duplicate_list[biggest_key]  # add item (key and value) to the one_common_list dictionary
+                    # print(one_common_list)
+                else:  # if condition is false
+                    pass  # do nothing
+
+    if len(uniq) == len(one_common_list):  # check if the count of elements in the received list = count in the uniq
+        print(one_common_list)  # print the one_common_list in console
+    else:  # if condition is false
+        print('Houston, we have a problem!')  # print the message about the error in console
+
+
+create_random_collection()  # call the method create_random_collection
+create_common_dictionary(random_dict_list)  # call the method create_common_dictionary with the random_dict_list parameter
