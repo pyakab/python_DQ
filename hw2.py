@@ -21,7 +21,7 @@ def create_random_collection():  # define the method for creating the list of 10
     print(random_dict_list)  # print the generated list of dictionary
 
 
-def create_common_dictionary(list):  # define the method for creating the common dictionary
+def create_common_dictionary():  # define the method for creating the common dictionary
     i = 0  # initialize the i variable, which will be used in the loop
     key_list = []  # initialize the list
     # tested_dictionary={}  # initialize the dictionary
@@ -96,4 +96,4 @@ def create_common_dictionary(list):  # define the method for creating the common
 
 
 create_random_collection()  # call the method create_random_collection
-create_common_dictionary(random_dict_list)  # call the method create_common_dictionary with the random_dict_list parameter
+create_common_dictionary()  # call the method create_common_dictionary
