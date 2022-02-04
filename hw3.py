@@ -69,44 +69,18 @@ def new_sentence():
     print(formatted_string1)
 
 
-def listToString(formatted_string1):
+def create_string_from_list():
     # initialize an empty string
     s1 = ""
+    global final_formatted_string
     final_formatted_string = s1.join(formatted_string1)
+    #print(final_formatted_string)
+
+def create_last_sentence():
     print(final_formatted_string)
-
-    # print(splitted_string[a])
-
-
-# words = lower_problem_string.split()
-# last_word=lower_problem_string.rfind('.')
-# last_word =re.findall(r'*?.',lower_problem_string)
-# print(last_word)
-# if words[-2] == ' *[.]':
-#    last_word = words[-1]
-#    print(last_word)
-
-
-# def normalize_text():
-# result = re.search(r'*?. ', lower_problem_string)
-# print(result)
-# word_string = lower_problem_string.split()
-# print(word_string)
-# i=1
-# while i < len(word_string):
-#    if word_string[i-1]=='*.':
-#        print(word_string[i-1])
-#        lower_problem_string[i].upper()
-#    i = i+1
-#    if splitted_string[a] == ' iz ':
-#        problem_string.replace(' iz ', ' is ')
-#    else:
-#        pass
-
-# print(lower_problem_string)
-
 
 count_whitespace()
 new_sentence()
 # normalize_text()
-listToString(formatted_string1)
+create_string_from_list()
+create_last_sentence()
