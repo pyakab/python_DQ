@@ -23,34 +23,54 @@ def count_whitespace():
 
 
 lower_problem_string = problem_string.lower()
-lower_problem_string1=(lower_problem_string.split())
+print(lower_problem_string)
+#lower_problem_string1=(lower_problem_string.split())
 
 formatted_string = []
 formatted_string1 = []
 
-def create_last_sentence():
-    match = ''
-    match = re.match('[a-zA-Z0-9.]', lower_problem_string)
-    print(match)
-
-
-def new_sentence():
+def create_new_sentence():
+    newstring = []
+    tested_string1 = lower_problem_string.split('.')
     x = 0
-    while x < len(lower_problem_string):
-        if lower_problem_string[x] == "\n" and lower_problem_string[x + 1] == "\n":
+    temp_string = ""
+    last_sentence = ""
+    while x < len(tested_string1):
+        temp_string = ""
+        last_string = temp_string.join(tested_string1[x])
+        lis = list(last_string.split(" "))
+        lenght = len(lis)
+        newstring.append(lis[lenght - 1])
+        x = x + 1
+
+    last_sentence = " "
+    print(str(newstring))
+
+    last_sentence1 = last_sentence.join(newstring)
+    print(last_sentence1)
+
+    global tested_string2
+    tested_string2 = lower_problem_string + ' ' + last_sentence1 + '.'
+    print(tested_string2)
+
+def normalize_text():
+    x = 0
+    while x < len(tested_string2):
+        if tested_string2[x] == "\n" and tested_string2[x + 1] == "\n":
             pass
-        elif lower_problem_string[x] == " " and lower_problem_string[x + 1] == " ":
+        elif tested_string2[x] == " " and tested_string2[x + 1] == " ":
             pass
-        elif lower_problem_string[x - 1] == "\n" and lower_problem_string[x] == "\t":
+        elif tested_string2[x] == " " and tested_string2[x + 1] == ".":
             pass
-        elif lower_problem_string[x] == " " and lower_problem_string[x - 1] == "." and lower_problem_string[
+        elif tested_string2[x - 1] == "\n" and tested_string2[x] == "\t":
+            pass
+        elif tested_string2[x] == " " and tested_string2[x - 1] == "." and tested_string2[
             x + 1] == "\n":
             pass
-        elif lower_problem_string[x - 2] == " " and lower_problem_string[x - 1] == "i" and lower_problem_string[
-            x] == "z" and lower_problem_string[x + 1] == " ":
+        elif tested_string2[x - 2] == " " and tested_string2[x - 1] == "i" and tested_string2[x] == "z" and tested_string2[x + 1] == " ":
             formatted_string.append('s')
         else:
-            formatted_string.append(lower_problem_string[x])
+            formatted_string.append(tested_string2[x])
 
         x = x + 1
     print(formatted_string)
@@ -79,7 +99,7 @@ def create_string_from_list():
     s1 = ""
     global final_formatted_string
     final_formatted_string = s1.join(formatted_string1)
-    #print(final_formatted_string)
+    print(final_formatted_string)
 
 #def create_last_sentence():
 #    newsentence = ""
@@ -117,8 +137,7 @@ def create_string_from_list():
 
 
 count_whitespace()
-create_last_sentence()
-new_sentence()
-# normalize_text()
+create_new_sentence()
+normalize_text()
 create_string_from_list()
 
