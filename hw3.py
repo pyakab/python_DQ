@@ -23,10 +23,15 @@ def count_whitespace():
 
 
 lower_problem_string = problem_string.lower()
-print(lower_problem_string)
+lower_problem_string1=(lower_problem_string.split())
 
 formatted_string = []
 formatted_string1 = []
+
+def create_last_sentence():
+    match = ''
+    match = re.match('[a-zA-Z0-9.]', lower_problem_string)
+    print(match)
 
 
 def new_sentence():
@@ -76,11 +81,44 @@ def create_string_from_list():
     final_formatted_string = s1.join(formatted_string1)
     #print(final_formatted_string)
 
-def create_last_sentence():
-    print(final_formatted_string)
+#def create_last_sentence():
+#    newsentence = ""
+
+    # calculating length of string
+    #final_formatted_string1 = list(final_formatted_string.split(" "))
+
+    #length = len(final_formatted_string1)
+
+    #print(final_formatted_string1)
+
+    # traversing from last
+    #for i in range(length - 1, 0, -1):
+
+        # if space is occurred then return
+     #   if (final_formatted_string[i] == "."):
+
+            # return reverse of newstring
+      #      return newsentence[::-1]
+       # else:
+        #    newsentence = newsentence + final_formatted_string[i]
+
+    #print(newsentence)
+    #test=final_formatted_string.split
+
+    #before, term, after = final_formatted_string.partition(':')
+    #before = before.rsplit(maxsplit=2)[-1:]
+
+    #for i in final_formatted_string:
+    #    if re.search(r"([a-zA-Z]+).", final_formatted_string):
+
+
+
+
+
 
 count_whitespace()
+create_last_sentence()
 new_sentence()
 # normalize_text()
 create_string_from_list()
-create_last_sentence()
+
