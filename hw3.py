@@ -15,12 +15,13 @@ def count_whitespace():
         if problem_string[a] == " " or problem_string[a] == "\n" or problem_string[a] == "\t":
             count = count + 1
         a = a + 1
-    print(f"Number of whitespace is {count}.")
+    return f"Number of whitespace is {count}."
 
-lower_problem_string = problem_string.lower()
 
-formatted_string = []
-formatted_string1 = []
+def make_lowercase_letter():
+    global lower_problem_string
+    lower_problem_string = problem_string.lower()
+    return lower_problem_string
 
 
 def create_new_sentence():
@@ -42,8 +43,10 @@ def create_new_sentence():
     tested_string2 = lower_problem_string + ' ' + last_sentence1 + '.'
 
 
-
 def normalize_text():
+    formatted_string = []
+    global formatted_string1
+    formatted_string1 = []
     x = 0
     while x < len(tested_string2):
         if tested_string2[x] == "\n" and tested_string2[x + 1] == "\n":
@@ -56,7 +59,11 @@ def normalize_text():
             pass
         elif tested_string2[x] == " " and tested_string2[x - 1] == "." and tested_string2[x + 1] == "\n":
             pass
-        elif tested_string2[x - 2] == " " and tested_string2[x - 1] == "i" and tested_string2[x] == "z" and tested_string2[x + 1] == " ":
+        elif tested_string2[x] == '“' and tested_string2[x - 1] != " ":
+            formatted_string.append(' ')
+            formatted_string.append(tested_string2[x])
+        elif tested_string2[x - 2] == " " and tested_string2[x - 1] == "i" and tested_string2[x] == "z" and \
+                tested_string2[x + 1] == " ":
             formatted_string.append('s')
         else:
             formatted_string.append(tested_string2[x])
@@ -83,10 +90,13 @@ def normalize_text():
 def create_string_from_list():
     s1 = ""
     final_formatted_string = s1.join(formatted_string1)
-    print(final_formatted_string)
+    return final_formatted_string
 
 
 count_whitespace()
+make_lowercase_letter()
 create_new_sentence()
 normalize_text()
 create_string_from_list()
+print(count_whitespace())
+print(create_string_from_list())
