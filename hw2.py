@@ -4,17 +4,16 @@ import string  # import string library
 import collections  # import collections library
 
 
-random_dict_list = []  # initialize list for the dictionary
-letters = ''  # initialized string of lowercase letters
+random_dict_list = []
 tested_dictionary = {}
 duplicates = []
 key_list = []
 one_common_list = {}
-#clear_uniq = []  # initialize list for unique keys
-#duplicate_list = {}  # initialize the dictionary for the repeated key
 
 
-def create_random_collection(letters):  # define the method for creating the list of 10 random dictionaries
+
+def create_random_collection():  # define the method for creating the list of 10 random dictionaries
+    letters = ""
     letters = string.ascii_lowercase  # initialized string of lowercase letters
     global random_dict_list
     for i in range(0, 10):  # set the conditions of the loop
@@ -26,11 +25,10 @@ def create_random_collection(letters):  # define the method for creating the lis
             random_dict[letter_key] = n  # add item (key and value) to the dictionary
             x = x + 1  # increase the counter x
         random_dict_list.append(random_dict)  # add created dictionary to the list
-
     return random_dict_list
 
 
-def create_key_list(random_dict_list):  # define the method for creating the common dictionary
+def create_key_list():  # define the method for creating the common dictionary
     global key_list
     i = 0  # initialize the i variable, which will be used in the loop
     while i < len(random_dict_list):  # set the conditions of the loop
@@ -41,14 +39,13 @@ def create_key_list(random_dict_list):  # define the method for creating the com
     return key_list
 
 
-def create_duplicates_list(key_list):
-    print(set(key_list))
+def create_duplicates_list():
     global duplicates
     duplicates = [item for item, count in collections.Counter(key_list).items() if count > 1]  # add to the duplicates list keys that are repeated in the key_list
     return duplicates
 
 
-def create_common_dictionary(key_list, duplicates, random_dict_list):
+def create_common_dictionary():
     uniq = set(key_list)  # clear the key_list from duplicates
 
     if len(duplicates) <= 0:  # the condition for checking if duplicates list is empty
@@ -104,14 +101,14 @@ def create_common_dictionary(key_list, duplicates, random_dict_list):
                     pass  # do nothing
 
     if len(uniq) == len(one_common_list):  # check if the count of elements in the received list = count in the uniq
-        print(one_common_list)  # print the one_common_list in console
+        return one_common_list  # print the one_common_list in console
     else:  # if condition is false
-        print('Houston, we have a problem!')  # print the message about the error in console
+        return 'Houston, we have a problem!'  # print the message about the error in console
 
 
-create_random_collection(letters)  # call the method create_random_collection
-create_key_list(random_dict_list)
-create_duplicates_list(key_list)
-create_common_dictionary(duplicates, key_list, random_dict_list)  # call the method create_common_dictionary
-print(create_random_collection(letters))
-#print(create_common_dictionary(duplicates, key_list, random_dict_list))
+create_random_collection()  # call the method create_random_collection
+create_key_list()
+create_duplicates_list()
+create_common_dictionary()  # call the method create_common_dictionary
+print(create_random_collection())
+print(create_common_dictionary())
