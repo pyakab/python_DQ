@@ -10,9 +10,7 @@ key_list = []
 one_common_list = {}
 
 
-
 def create_random_collection():  # define the method for creating the list of 10 random dictionaries
-    letters = ""
     letters = string.ascii_lowercase  # initialized string of lowercase letters
     global random_dict_list
     for i in range(0, 10):  # set the conditions of the loop
@@ -92,7 +90,7 @@ def create_common_dictionary():
 
                 k = k + 1  # increase the counter k
                 if k == len(random_dict_list):  # check if the k = the length of list
-                    biggest_key = max(duplicate_list,key=duplicate_list.get)  # get the key with the biggest value from the duplicate_list dictionary
+                    biggest_key = max(duplicate_list, key=duplicate_list.get)  # get the key with the biggest value from the duplicate_list dictionary
                     # print(biggest_key)
                     one_common_list[biggest_key] = duplicate_list[biggest_key]  # add item (key and value) to the one_common_list dictionary
                     # print(one_common_list)
