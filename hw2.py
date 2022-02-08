@@ -5,7 +5,6 @@ import collections  # import collections library
 
 
 random_dict_list = []
-tested_dictionary = {}
 duplicates = []
 key_list = []
 one_common_list = {}
