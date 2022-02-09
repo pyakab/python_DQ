@@ -12,7 +12,8 @@ def count_whitespace():
     a = 0
     count = 0
     while a < len(problem_string):
-        if problem_string[a] == " " or problem_string[a] == "\n" or problem_string[a] == "\t":
+        if problem_string[a].isspace():
+        #if problem_string[a] == " " or problem_string[a] == "\n" or problem_string[a] == "\t":
             count = count + 1
         a = a + 1
     return f"Number of whitespace is {count}."
