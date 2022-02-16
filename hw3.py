@@ -7,8 +7,12 @@ problem_string = '''homEwork:
 
 	last iz TO calculate nuMber OF Whitespace characteRS in this Text. caREFULL, not only Spaces, but ALL whitespaces. I got 87.'''
 
+#lower_problem_string = ''
+#tested_string2 = ''
+#formatted_string1 = ''
 
-def count_whitespace():
+
+def count_whitespace(problem_string):
     a = 0
     count = 0
     while a < len(problem_string):
@@ -19,13 +23,12 @@ def count_whitespace():
     return f"Number of whitespace is {count}."
 
 
-def make_lowercase_letter():
-    global lower_problem_string
+def make_lowercase_letter(problem_string):
     lower_problem_string = problem_string.lower()
     return lower_problem_string
 
 
-def create_new_sentence():
+def create_new_sentence(lower_problem_string):
     newstring = []
     tested_string1 = lower_problem_string.split('.')
     x = 0
@@ -40,13 +43,15 @@ def create_new_sentence():
 
     last_sentence = " "
     last_sentence1 = last_sentence.join(newstring)
-    global tested_string2
+    #global tested_string2
     tested_string2 = lower_problem_string + ' ' + last_sentence1 + '.'
+    return tested_string2
 
 
-def normalize_text():
+def normalize_text(tested_string2):
+    create_new_sentence(lower_problem_string)
     formatted_string = []
-    global formatted_string1
+    #global formatted_string1
     formatted_string1 = []
     x = 0
     while x < len(tested_string2):
@@ -86,18 +91,19 @@ def normalize_text():
             formatted_string1.append(formatted_string[y])
 
         y = y + 1
+    return formatted_string1
 
 
-def create_string_from_list():
+def create_string_from_list(formatted_string1):
     s1 = ""
     final_formatted_string = s1.join(formatted_string1)
     return final_formatted_string
 
 
-count_whitespace()
-make_lowercase_letter()
-create_new_sentence()
-normalize_text()
-create_string_from_list()
-print(count_whitespace())
-print(create_string_from_list())
+count_whitespace(problem_string)
+lower_problem_string = make_lowercase_letter(problem_string)
+tested_string2 = create_new_sentence(lower_problem_string)
+formatted_string1 = normalize_text(tested_string2)
+create_string_from_list(formatted_string1)
+print(count_whitespace(problem_string))
+print(create_string_from_list(formatted_string1))
