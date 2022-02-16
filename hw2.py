@@ -5,14 +5,12 @@ import collections  # import collections library
 
 
 random_dict_list = []
-duplicates = []
 key_list = []
-one_common_list = {}
+
 
 
 def create_random_collection():  # define the method for creating the list of 10 random dictionaries
     letters = string.ascii_lowercase  # initialized string of lowercase letters
-    global random_dict_list
     for i in range(0, 10):  # set the conditions of the loop
         x = 0  # initialize the x variable, which will be used in the loop
         random_dict = {}  # initialize the dictionary
@@ -25,8 +23,7 @@ def create_random_collection():  # define the method for creating the list of 10
     return random_dict_list
 
 
-def create_key_list():  # define the method for creating the common dictionary
-    global key_list
+def create_key_list(key_list,random_dict_list):  # define the method for creating the common dictionary
     i = 0  # initialize the i variable, which will be used in the loop
     while i < len(random_dict_list):  # set the conditions of the loop
         tested_dictionary = random_dict_list[i]  # set tested_dictionary = [i] dictionary from the random_dict_list
@@ -36,13 +33,12 @@ def create_key_list():  # define the method for creating the common dictionary
     return key_list
 
 
-def create_duplicates_list():
-    global duplicates
+def create_duplicates_list(key_list):
     duplicates = [item for item, count in collections.Counter(key_list).items() if count > 1]  # add to the duplicates list keys that are repeated in the key_list
     return duplicates
 
 
-def create_common_dictionary():
+def create_common_dictionary(key_list, duplicates):
     uniq = set(key_list)  # clear the key_list from duplicates
 
     if len(duplicates) <= 0:  # the condition for checking if duplicates list is empty
@@ -103,9 +99,9 @@ def create_common_dictionary():
         return 'Houston, we have a problem!'  # print the message about the error in console
 
 
-create_random_collection()  # call the method create_random_collection
-create_key_list()
-create_duplicates_list()
-create_common_dictionary()  # call the method create_common_dictionary
+random_dict_list = create_random_collection()  # call the method create_random_collection
+keys_list = create_key_list(key_list,random_dict_list)
+duplicates = create_duplicates_list(keys_list)
+create_common_dictionary(key_list, duplicates)  # call the method create_common_dictionary
 print(create_random_collection())
-print(create_common_dictionary())
+print(create_common_dictionary(key_list, duplicates))
