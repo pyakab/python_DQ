@@ -1,0 +1,29 @@
+News------------
+ This is the first news in the feed
+Chicago, 2022-02-18
+
+Private ad------------
+ldjhagflkjdaflajfla 
+Actual until: 2022-11-13 00:00:00, 267 days left.
+
+Private ad------------
+kasjflaksjfalkfja 
+Actual until: 2022-01-02 00:00:00, -48 days left.
+
+Private ad------------
+This is a text of ad 
+Actual until: 2022-01-03 00:00:00, -47 days left.
+
+Private ad------------
+This is a new rivate ad 
+Actual until: 2023-11-12 00:00:00, 631 days left.
+
+Blog post------------
+ Post title # 1 
+ Author: Anna 
+ Check th text of this post 
+ tag: weather
+
+Private ad------------
+Test of the text 
+Actual until: 2022-02-22 00:00:00, 3 days left.

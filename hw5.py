@@ -32,8 +32,9 @@ class News(Publication):
 
 
     def publishing_news(self):
-        with open("test.txt", "a") as text_file:
-            text_file.write(f"\n\nNews: \n {self.text} \n City: {self.city} \n Current date: {current_date}")
+        news_date = date.today()
+        with open("news_feed.txt", "a") as text_file:
+            text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
 
 
 class PrivateAd(Publication):
@@ -44,8 +45,8 @@ class PrivateAd(Publication):
 
     def publishing_ad(self):
         ndays = (self.expiration_date - current_date).days
-        with open("test.txt", "a") as text_file:
-            text_file.write(f"\n\nPrivate ad: \n{self.text} \nExpiration date: {self.expiration_date} \nDays left:{ndays}")
+        with open("news_feed.txt", "a") as text_file:
+            text_file.write(f"\n\nPrivate ad------------\n{self.text} \nActual until: {self.expiration_date}, {ndays} days left.")
 
 
 class BlogPost(Publication):
@@ -56,9 +57,10 @@ class BlogPost(Publication):
         self.tag = tag
 
     def publishing_post(self):
-        with open("test.txt", "a") as text_file:
-            text_file.write(f"\n\nBlog post: \n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
-        text_file.close()
+        print(self.text)
+        with open("news_feed.txt", "a") as text_file:
+            text_file.write(f"\n\nBlog post------------\n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
+
 
 
 
@@ -80,17 +82,17 @@ class main():
             deadline_date = input()
             try:
                 expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
-                (expiration_date - current_date).days > 0
             except:
                 print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
                 break
-            else:
+            if (expiration_date - current_date).days < 0:
                 print(f'Wrong date was input - {deadline_date}\nPlease repeat the input of ad with the right date (later than today)')
                 break
+            else:
+                pass
             print(expiration_date)
             print('Print the text of the ad')
             text = input()
-            #current_date = date.today()
             new_private_ad = PrivateAd(text,expiration_date)
             new_private_ad.publishing_ad()
         elif answer.lower()=='private ad':
@@ -124,14 +126,4 @@ class main():
 
 
 
-
-
 main()
-
-
-
-
-
-#getattr(Publications, 'name')
-
-#if name =
