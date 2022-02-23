@@ -63,12 +63,22 @@ class BlogPost(Publication):
 
 class FileUpload():
     def __init__(self):
-        self.text = text
+        #self.text = text
+        self.filepath = filepath
+
+    def publishing_from_file(self):
+        news_date = date.today()
+        print(self.filepath)
+        #text = open(self.filepath, 'r')
+        #with open("news_feed.txt", "a") as text_file:
+        #    text_file.write(f"News------------\n {text}\n\n")
 
 
 class main():
     y = 0
     while y==0 :
+        print('Do you want to add file from file or input it with keyboard?')
+        answer = input()
         print('What type of publication do you want to add? (Options: news / private ad / blog post)')
         answer = input()
         print(f'Your answer is:\n{answer}')

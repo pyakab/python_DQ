@@ -27,3 +27,12 @@ Blog post------------
 Private ad------------
 Test of the text 
 Actual until: 2022-02-22 00:00:00, 3 days left.
+
+News------------
+ yujjhgjyhg
+jghgjh, 2022-02-23News------------
+ <_io.TextIOWrapper name='C:/Users/Anna_Kabanova/PycharmProject/python_DQE/file1.txt' mode='r' encoding='cp1252'>
+
+News------------
+ ['Test.\n', 'This is the First File in tHe text file.\n', '\n', '\n', 'Test # 2.\n', 'This is tHe Second File in tHe file.\n', '\n', '\n']
+
