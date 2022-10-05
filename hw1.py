@@ -1,23 +1,22 @@
 from random import randint  # import library for creating random list
 
-randomlist = []  # initialize the list
-sorted_randomlist = []  # initialize the list
-avg_list = []  # initialize the list
+#sorted_randomlist = []  # initialize the list
+#avg_list = []  # initialize the list
 
 
 def create_100_elements_list():  # define the function(method) for creating the list of 100 random numbers
     i = 0  # initialize the i variable, which will be used in the loop
+    randomlist=[] # initialize the list
     while i < 100:  # set the conditions of the loop
         n = randint(1, 1000)  # initialized the variable n in the range from 1 to 1000 with the randint function
         randomlist.append(n)  # add the n variable to the list
         i = i + 1  # increment
+    print(randomlist)
     return randomlist
 
 
-def sort_list_elements(list):  # define the function for sorting the the list of 100 random numbers
-    global sorted_randomlist  # set the global variable for using it in the other functions
-    sorted_randomlist = list  # set the sorted_randomlist is equal to the input list
-    i = 0  # initialize a variable for the loop
+def sort_list_elements(sorted_randomlist):  # define the function for sorting the the list of 100 random numbers
+    i = 0  # initia.lize a variable for the loop
     while i <= len(sorted_randomlist):  # set the conditions for the exit from the loop after checking all elements in the list
         j = 0  # initialize a variable for the loop
         while j < len(sorted_randomlist) - i - 1:  # set the conditions for the exit from the loop
@@ -29,9 +28,7 @@ def sort_list_elements(list):  # define the function for sorting the the list of
     return sorted_randomlist
 
 
-def calculate_average(list):  # define the name of the function for calculating the average for odd and even numbers
-    global avg_list  # initializing the global variable
-    avg_list = list  # set the variable equal to the received list
+def calculate_average(avg_list):  # define the name of the function for calculating the average for odd and even numbers
     i = 0  # set the variable (counter) i equal to the 0
     even_sum = 0  # initialize the even_sum variable
     even_count = 0  # initialize the even_count variable
@@ -52,6 +49,8 @@ def calculate_average(list):  # define the name of the function for calculating 
     print(odd_avg)  # print the odd_avg in console
 
 
-create_100_elements_list()  # call the method create_100_elements_list
-sort_list_elements(randomlist)  # call the method sort_list_elements with the input variable randomlist
-calculate_average(sorted_randomlist)  # call the method calculate_average with the input variable sorted_randomlist
+#create_100_elements_list()  # call the method create_100_elements_list
+sorted_randomlist = create_100_elements_list()
+#sort_list_elements(sorted_randomlist)  # call the method sort_list_elements with the input variable randomlist
+avg_list = sort_list_elements(sorted_randomlist)
+calculate_average(avg_list)  # call the method calculate_average with the input variable sorted_randomlist
