@@ -1,10 +1,6 @@
 import random
 from random import randint  # import library for creating random list
 
-#sorted_randomlist = []  # initialize the list
-#avg_list = []  # initialize the list
-
-
 def create_100_elements_list():  # define the function(method) for creating the list of 100 random numbers
     i = 0  # initialize the i variable, which will be used in the loop
     randomlist=[] # initialize the list
