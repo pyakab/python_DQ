@@ -1,5 +1,6 @@
 from datetime import date, datetime
 import os
+import csv
 
 current_date = datetime.today()
 
@@ -64,7 +65,7 @@ class FileUpload(Publication):
         file_for_delete=self.filepath
         os.remove(file_for_delete)
 
-class normalization():
+class Normalization():
 
     def __init__(self):
         self.text_file = 'news_feed.txt'
@@ -122,6 +123,71 @@ class normalization():
             print('File isn`t found')
         with open("normalized_newsfeed.txt", "a") as text_file:
             text_file.write(f"{final_formatted_text}")
+
+        edited_file='normalized_newsfeed.txt'
+        return edited_file
+
+class FileCSV():
+    def __init__(self, newsfeed):
+        self.newsfeed=newsfeed
+
+    def count_words():
+        file = open("self.newsfeed", "rt")
+        d = dict()
+        for line in text:
+            # Remove the leading spaces and newline character
+            line = line.strip()
+
+            # Convert the characters in line to
+            # lowercase to avoid case mismatch
+            line = line.lower()
+
+            # Split the line into words
+            words = line.split(" ")
+
+            # Iterate over each word in line
+            for word in words:
+                # Check if the word is already in dictionary
+                if word in d:
+                    # Increment count of word by 1
+                    d[word] = d[word] + 1
+                else:
+                    # Add the word to dictionary with count 1
+                    d[word] = 1
+
+        # Print the contents of dictionary
+
+        header = ['word', 'count']
+        with open('words_count.csv', 'w', encoding='UTF8') as f:
+            writer = csv.writer(f)
+            writer.writerow(header)
+            for key in list(d.keys()):
+                writer.writerow('{key}', '{d[key]}')
+        f.close()
+
+        #with open('countries.csv', 'w', encoding='UTF8', newline='') as f:
+        #    writer = csv.DictWriter(f, fieldnames=fieldnames)
+        #    writer.writeheader()
+        #    writer.writerows(rows)
+
+        #data = file.read()
+        #data=data.lower()
+        #words = data.split()
+
+
+    def show_statistics():
+        with open('self.newsfeed') as infile:
+            lines = 0
+            words = 0
+            characters = 0
+            for line in infile:
+                wordslist = line.split()
+                lines = lines + 1
+                words = words + len(wordslist)
+                characters += sum(len(word) for word in wordslist)
+        print(lines)
+        print(words)
+        print(characters)
 
 
 class main():
@@ -196,8 +262,12 @@ class main():
             y = 0
         else:
             y = 1
-        normalization = normalization()
-        normalization.normalizing_file()
+        normalization = Normalization()
+        newsfeed = normalization.normalizing_file()
+        #print(newsfeed)
+        csv=FileCSV(newsfeed)
+        csv.count_words()
+        csv.show_statistics()
 
 
 main()
