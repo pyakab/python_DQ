@@ -1,26 +1,11 @@
 from datetime import date, datetime
-
-#Create a tool, which will do user generated news feed:
-#1.User select what data type he wants to add
-#2.Provide record type required data
-#3.Record is published on text file in special format
-
-#You need to implement:
-
-#1.News – text and city as input. Date is calculated during publishing.
-
-#2.Privat ad – text and expiration date as input. Day left is calculated during publishing.
-
-#3.Your unique one with unique publish rules.
-
-#Each new record should be added to the end of file. Commit file in git for review.
+import os
 
 current_date = datetime.today()
 
 class Publication():
     def __init__(self, text):
         self.text = text
-        #self.city = city
 
     def publishing(self):
         return f"{self.text}"
@@ -61,81 +46,158 @@ class BlogPost(Publication):
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nBlog post------------\n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
 
-class FileUpload():
-    def __init__(self):
-        #self.text = text
+class FileUpload(Publication):
+    def __init__(self, filepath):
         self.filepath = filepath
 
+
     def publishing_from_file(self):
-        news_date = date.today()
-        print(self.filepath)
-        #text = open(self.filepath, 'r')
-        #with open("news_feed.txt", "a") as text_file:
-        #    text_file.write(f"News------------\n {text}\n\n")
+        with open(self.filepath, 'r') as f:
+            filetext = f.read()
+        print(filetext)
+        with open("news_feed.txt", "a") as text_file:
+            text_file.write(f"\n\n{filetext}")
+
+
+
+    def delete_file(self):
+        file_for_delete=self.filepath
+        os.remove(file_for_delete)
+
+class normalization():
+
+    def __init__(self):
+        self.text_file = 'news_feed.txt'
+
+
+    def normalizing_file(self):
+        text_file=self.text_file
+        with open(text_file, 'r') as f:
+            text_file = f.read()
+        text_file=text_file.lower()
+        updated_file=[]
+        text_file1=[]
+        x = 0
+        while x < len(text_file):
+            if text_file[x] == " " and text_file[x + 1] == " ":
+                pass
+            elif text_file[x] == " " and text_file[x + 1] == ".":
+                pass
+            elif text_file[x - 1] == "\n" and text_file[x] == "\t":
+                pass
+            elif text_file[x] == " " and text_file[x - 1] == "." and text_file[x + 1] == "\n":
+                pass
+            else:
+                updated_file.append(text_file[x])
+            x = x + 1
+
+        y = 0
+        while y < len(updated_file):
+            if updated_file[y - 1] == "\n":
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2]=="\n" and updated_file[y - 1]==" " :
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2] == "." and updated_file[y - 1] == " ":
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2] == "." and updated_file[y - 1] == "\n":
+                text_file1.append(updated_file[y].upper())
+            elif y == 0:
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2] == ".":
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2] == ":" and updated_file[y - 1] == "\n":
+                text_file1.append(updated_file[y].upper())
+            elif updated_file[y - 2] == ":" and updated_file[y - 1] == " ":
+                text_file1.append(updated_file[y].upper())
+            else:
+                text_file1.append(updated_file[y])
+
+            y = y + 1
+
+        s1 = ""
+        final_formatted_text = s1.join(text_file1)
+        if (os.path.exists("normalized_newsfeed.txt")):
+            os.remove("normalized_newsfeed.txt")
+        else:
+            print('File isn`t found')
+        with open("normalized_newsfeed.txt", "a") as text_file:
+            text_file.write(f"{final_formatted_text}")
 
 
 class main():
     y = 0
     while y==0 :
-        print('Do you want to add file from file or input it with keyboard?')
-        answer = input()
-        print('What type of publication do you want to add? (Options: news / private ad / blog post)')
-        answer = input()
-        print(f'Your answer is:\n{answer}')
-        if answer.lower()=='news':
-            print('What city was happened news in?')
-            city = input()
-            print('Print the text of the news')
-            text = input()
-            new_news = News(text,city)
-            new_news.publishing_news()
-        elif answer.lower()=='private ad':
-            print('When is the deadline of this ad? (yyyy/mm/dd)')
-            deadline_date = input()
-            try:
-                expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
-            except:
-                print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
-                break
-            if (expiration_date - current_date).days < 0:
-                print(f'Wrong date was input - {deadline_date}\nPlease repeat the input of ad with the right date (later than today)')
-                break
+        print('Do you want to add text from file or input it with keyboard? (Options: file / keyboard)')
+        inputway = input()
+        print(f'Your answer is:\n{inputway}')
+        if inputway.lower()=='keyboard':
+            print('What type of publication do you want to add? (Options: news / private ad / blog post)')
+            answer = input()
+            print(f'Your answer is:\n{answer}')
+            if answer.lower()=='news':
+                print('What city was happened news in?')
+                city = input()
+                print('Print the text of the news')
+                text = input()
+                new_news = News(text,city)
+                new_news.publishing_news()
+            elif answer.lower()=='private ad':
+                print('When is the deadline of this ad? (yyyy/mm/dd)')
+                deadline_date = input()
+                try:
+                    expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
+                except:
+                    print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
+                    break
+                if (expiration_date - current_date).days < 0:
+                    print(f'Wrong date was input - {deadline_date}\nPlease repeat the input of ad with the right date (later than today)')
+                    break
+                else:
+                    pass
+                print(expiration_date)
+                print('Print the text of the ad')
+                text = input()
+                new_private_ad = PrivateAd(text,expiration_date)
+                new_private_ad.publishing_ad()
+            elif answer.lower()=='private ad':
+                print('When is the deadline of this ad?')
+                expiration_date = input()
+                print('Print the text of the ad')
+                text = input()
+                current_date = date.today()
+                new_private_ad = PrivateAd(text,expiration_date)
+                new_private_ad.publishing_ad()
+            elif answer.lower()=='blog post':
+                print('What is a title of post?')
+                title = input()
+                print('Who is an author of this post?')
+                author = input()
+                print('Print the text of the post')
+                text = input()
+                print('What tag do you want to add to this post')
+                tag = input()
+                new_blogpost = BlogPost(text,title, author, tag)
+                new_blogpost.publishing_post()
             else:
-                pass
-            print(expiration_date)
-            print('Print the text of the ad')
-            text = input()
-            new_private_ad = PrivateAd(text,expiration_date)
-            new_private_ad.publishing_ad()
-        elif answer.lower()=='private ad':
-            print('When is the deadline of this ad?')
-            expiration_date = input()
-            print('Print the text of the ad')
-            text = input()
-            current_date = date.today()
-            new_private_ad = PrivateAd(text,expiration_date)
-            new_private_ad.publishing_ad()
-        elif answer.lower()=='blog post':
-            print('What is a title of post?')
-            title = input()
-            print('Who is an author of this post?')
-            author = input()
-            print('Print the text of the post')
-            text = input()
-            print('What tag do you want to add to this post')
-            tag = input()
-            new_blogpost = BlogPost(text,title, author, tag)
-            new_blogpost.publishing_post()
-        else:
-            print('This type of publication can`t be added to the news feed')
+                print('This type of publication can`t be added to the news feed')
+
+        elif inputway=='file':
+            print('Input the filepath:')
+            filepath = input()
+            print(f'Your answer is:\n{filepath}')
+            upload_to_print=FileUpload(filepath)
+            upload_to_print.publishing_from_file()
+            upload_to_print.delete_file()
+
 
         print('Do you want to add another publication? (Options: y/n)')
-        user_answer = input()
-        if user_answer == 'y':
+        another_publication = input()
+        if another_publication=='y':
             y = 0
         else:
             y = 1
-
+        normalization = normalization()
+        normalization.normalizing_file()
 
 
 main()
