@@ -28,11 +28,67 @@ Private ad------------
 Test of the text 
 Actual until: 2022-02-22 00:00:00, 3 days left.
 
-News------------
- yujjhgjyhg
-jghgjh, 2022-02-23News------------
- <_io.TextIOWrapper name='C:/Users/Anna_Kabanova/PycharmProject/python_DQE/file1.txt' mode='r' encoding='cp1252'>
+Blog post------------
+ My new test 
+ Author: Annna 
+ ababagalamaga 
+ tag: books, october
+
+
+test 1
+this is an interesting news that your should read. this check
+
+test 1
+this is an interesting news that your should read. this check
+
+test 1
+this is an interesting news that your should read. this check
+
+test 1
+this is an interesting news that your should read. this check
+
+test 1
+this is an interesting news that your should read. this check
+
+Blog post------------
+ wegwgg 
+ Author: eergegegeg 
+ awafrafaf 
+ tag: ere
 
 News------------
- ['Test.\n', 'This is the First File in tHe text file.\n', '\n', '\n', 'Test # 2.\n', 'This is tHe Second File in tHe file.\n', '\n', '\n']
+ shdhdfhdfh
+ksdgklsjgklsg, 2022-10-16
 
+test 1
+this is an interesting news that your should read. this check
+
+News------------
+ jaeflkeajk;lfkasl;rkf;laklfafkjdsgfk
+New York, 2022-10-16
+
+News------------
+ lkjkljlkjlkjlkjlkjkgjhfdthgfkjhlkj;lk 
+lkjlkjlkj, 2022-10-16
+
+News------------
+ jfgfgf lkjlkjlkj fgfgffggghh
+lkjlkjkljlkj llll, 2022-10-16
+
+News------------
+ wektwlktwet erherheh aedwed
+Kyiv, 2022-10-16
+
+News------------
+ lekwf;lw wlef;w adfwf
+Berlin, 2022-10-16
+
+Private ad------------
+I am looking fot the Lntern 
+Actual until: 2022-11-01 00:00:00, 15 days left.
+
+Blog post------------
+ Where is Elise 
+ Author: Time 
+ Does anyone know where Elise is going? It is the greates mistery of this cith 
+ tag: mistery,crime,city
