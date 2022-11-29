@@ -51,7 +51,8 @@ class BlogPost(Publication):
 
 
 class FileUpload(Publication):
-    def __init__(self, filepath):
+    def __init__(self, filepath, text):
+        super().__init__(text)
         self.filepath = filepath
 
     def publishing_from_file(self):
@@ -103,7 +104,7 @@ class FileUpload(Publication):
                             tag = next(f).strip()
                             new_blogpost = BlogPost(text, title, author, tag)
                             new_blogpost.publishing_post()
-                            upload_to_print = FileUpload(filepath)
+                            upload_to_print = FileUpload(self.filepath)
                             upload_to_print.delete_file()
 
                 else:
