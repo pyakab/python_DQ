@@ -36,3 +36,16 @@ jghgjh, 2022-02-23News------------
 News------------
  ['Test.\n', 'This is the First File in tHe text file.\n', '\n', '\n', 'Test # 2.\n', 'This is tHe Second File in tHe file.\n', '\n', '\n']
 
+
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29

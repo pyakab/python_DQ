@@ -81,17 +81,17 @@ class FileUpload(Publication):
                         print(
                             'Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
                         break
-                if (expiration_date - current_date).days < 0:
-                    print(
+                    if (expiration_date - current_date).days < 0:
+                        print(
                         f'Wrong date was input - {deadline_date}\n'
                         f'Please repeat the input of ad with the right date (later than today)')
-                    break
-                if deadline_date != '':
-                    text = next(f).strip()
-                    new_private_ad = PrivateAd(text, expiration_date)
-                    new_private_ad.publishing_ad()
-                else:
-                    print('File has the wrong format')
+                        break
+                    if deadline_date != '':
+                        text = next(f).strip()
+                        new_private_ad = PrivateAd(text, expiration_date)
+                        new_private_ad.publishing_ad()
+                    else:
+                        print('File has the wrong format')
 
             if line.startswith('blog post'):
                 title = next(f).strip()
