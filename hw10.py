@@ -28,6 +28,15 @@ class News(Publication):
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
 
+        newstable_connection=DBConnection('publication.db')
+        tablename = 'news'
+        newstable_result = newstable_connection.select(tablename,text,city,news_date)
+        if result == '':
+            newstable_connection.insert(tablename, text,city,news_date)
+        else:
+            print('Entry is not unique')
+
+
 
 class PrivateAd(Publication):
     def __init__(self, text, expiration_date):
@@ -119,81 +128,73 @@ class FileUpload(Publication):
 
 
 class DBConnection:
-    def select(self, tablename):
-        self.tablename = tablename
+    def __init__(self, database):
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
 
     def insert(self, tablename):
         self.tablename = tablename
 
 
 class News(DBConnection):
+    def __init__(self, database):
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
 
-    def select(self, tablename, text, city, date):
+    def select(self, tablename, text, city, news_date):
         self.tablename = tablename
         self.text = text
         self.city = city
-        self.date = date
-        cursor.execute('CREATE TABLE IF NOT EXISTS news (city text, date text, text text)')
-        cursor.execute("SELECT * FROM news WHERE city = ? AND date = ? AND text = ?", (city, news_date, text)
-        result = cursor.fetchall()
+        self.news_date = news_date
+        self.cur.execute('CREATE TABLE IF NOT EXISTS news (city text, news_date text, text text)')
+        self.cur.execute("SELECT * FROM news WHERE city = ? AND news_date = ? AND text = ?", (city, news_date, text)
+        result = self.cur.fetchall()
         return result
 
-    if result == '':
-        cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
-    else:
-        print('Entry is not unique')
-        def add_to_table(self, tablename):
-            dbConnection.add_to_table(self, tablename)
 
-    def insert(self, tablename, city, date, text):
+   def insert(self, tablename, city, news_date, text):
         self.tablename = tablename
         self.text = text
         self.city = city
-        self.date = date
-        cursor.execute("INSERT INTO tablename (city, date, text) VALUES( ?,?,?)", (city, date, text))
+        self.news_date = news_date
+        self.cur.execute("INSERT INTO tablename (city, news_date, text) VALUES( ?,?,?)", (city, news_date, text))
 
 class PrivateAd(DBConnection):
+    def __init__(self, database):
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
 
     def select(self, tablename, expiration_date, text):
         self.tablename = tablename
         self.expiration_date = expiration_date
         self.text = text
-        cursor.execute('CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)')
-        cursor.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration)
-        result = cursor.fetchall()
+        self.cur.execute('CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)')
+        self.cur.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration_date)
+        result = self.cur.fetchall()
         return result
-
-    if result == '':
-        cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
-    else:
-        print('Entry is not unique')
 
     def insert(self, tablename, expiration_date, text):
         self.tablename = tablename
         self.text = text
         self.expiration_date = expiration_date
-        cursor.execute("INSERT INTO tablename (text,expiration_date) VALUES( ?,?,?)", (text,expiration_date))
+        self.cur.execute("INSERT INTO tablename (text,expiration_date) VALUES( ?,?,?)", (text,expiration_date))
 
 class BlogPost(DBConnection):
+    def __init__(self, database):
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
+
     def select(self, tablename, text, title, author, tag):
         self.tablename = tablename
         self.text = text
         self.title = title
         self.author = author
         self.tag = tag
-        cursor.execute('CREATE TABLE IF NOT EXISTS tablename (title text, text text, author text, tag text')
-        cursor.execute("SELECT * FROM news WHERE title = ? AND text = ? AND author = ? AND tag = ?",
+        self.cur.execute('CREATE TABLE IF NOT EXISTS tablename (title text, text text, author text, tag text')
+        self.cur.execute("SELECT * FROM news WHERE title = ? AND text = ? AND author = ? AND tag = ?",
                        (title, text, author, tag))
-        result = cursor.fetchall()
-        if result == '':
-        cursor.execute
-                result = cursor.fetchall()
-                if result == '':
-                    cursor.execute("INSERT INTO news (title, text, author, tag) VALUES(?,?,?,?)",
-                                   (title, text, author, tag))
-                else:
-                    print('Entry is not unique')
-                return result
+        result = self.cur.fetchall()
+        return result
 
     def insert(self, tablename, text, title, author, tag):
         self.tablename = tablename
@@ -201,7 +202,7 @@ class BlogPost(DBConnection):
         self.title = title
         self.author = author
         self.tag = tag
-        cursor.execute("INSERT INTO tablename (text, expiration_date) VALUES( ?,?)", (text, expiration_date))
+        self.cur.execute("INSERT INTO tablename (text, expiration_date) VALUES( ?,?)", (text, expiration_date))
 
 
 class JSONReading:
