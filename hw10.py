@@ -119,10 +119,90 @@ class FileUpload(Publication):
 
 
 class DBConnection:
+    def select(self, tablename):
+        self.tablename = tablename
 
-    def select(self):
+    def insert(self, tablename):
+        self.tablename = tablename
 
-    def insert(self):
+
+class News(DBConnection):
+
+    def select(self, tablename, text, city, date):
+        self.tablename = tablename
+        self.text = text
+        self.city = city
+        self.date = date
+        cursor.execute('CREATE TABLE IF NOT EXISTS news (city text, date text, text text)')
+        cursor.execute("SELECT * FROM news WHERE city = ? AND date = ? AND text = ?", (city, news_date, text)
+        result = cursor.fetchall()
+        return result
+
+    if result == '':
+        cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
+    else:
+        print('Entry is not unique')
+        def add_to_table(self, tablename):
+            dbConnection.add_to_table(self, tablename)
+
+    def insert(self, tablename, city, date, text):
+        self.tablename = tablename
+        self.text = text
+        self.city = city
+        self.date = date
+        cursor.execute("INSERT INTO tablename (city, date, text) VALUES( ?,?,?)", (city, date, text))
+
+class PrivateAd(DBConnection):
+
+    def select(self, tablename, expiration_date, text):
+        self.tablename = tablename
+        self.expiration_date = expiration_date
+        self.text = text
+        cursor.execute('CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)')
+        cursor.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration)
+        result = cursor.fetchall()
+        return result
+
+    if result == '':
+        cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
+    else:
+        print('Entry is not unique')
+
+    def insert(self, tablename, expiration_date, text):
+        self.tablename = tablename
+        self.text = text
+        self.expiration_date = expiration_date
+        cursor.execute("INSERT INTO tablename (text,expiration_date) VALUES( ?,?,?)", (text,expiration_date))
+
+class BlogPost(DBConnection):
+    def select(self, tablename, text, title, author, tag):
+        self.tablename = tablename
+        self.text = text
+        self.title = title
+        self.author = author
+        self.tag = tag
+        cursor.execute('CREATE TABLE IF NOT EXISTS tablename (title text, text text, author text, tag text')
+        cursor.execute("SELECT * FROM news WHERE title = ? AND text = ? AND author = ? AND tag = ?",
+                       (title, text, author, tag))
+        result = cursor.fetchall()
+        if result == '':
+        cursor.execute
+                result = cursor.fetchall()
+                if result == '':
+                    cursor.execute("INSERT INTO news (title, text, author, tag) VALUES(?,?,?,?)",
+                                   (title, text, author, tag))
+                else:
+                    print('Entry is not unique')
+                return result
+
+    def insert(self, tablename, text, title, author, tag):
+        self.tablename = tablename
+        self.text = text
+        self.title = title
+        self.author = author
+        self.tag = tag
+        cursor.execute("INSERT INTO tablename (text, expiration_date) VALUES( ?,?)", (text, expiration_date))
+
 
 class JSONReading:
 
