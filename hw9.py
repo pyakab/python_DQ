@@ -126,22 +126,40 @@ class JSONReading:
             return False
         return True
 
-    def read_jsonfile(filepath):
-        with open('filepath', 'r') as json_file:
+    def read_jsonfile(self):
+        with open(self.filepath, 'r') as json_file:
             publication_data = json.load(json_file)
             print(publication_data)
             if (publication_data['type']) == 'news':
                 print('It`s news')
                 city = publication_data['city']
                 text = publication_data['text']
+                new_news = News(text, city)
+                new_news.publishing_news()
             elif (publication_data['type']) == 'private ad':
                 print('It`s private ad')
                 text = publication_data['text']
+                deadline_date = publication_data['deadline date']
+                try:
+                    expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
+                except:
+                    print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
+
+                if (expiration_date - current_date).days < 0:
+                    print(
+                        f'Wrong date was input - {deadline_date}\n'
+                        f'Please repeat the input of ad with the right date (later than today)')
+                else:
+                    pass
+                new_private_ad = PrivateAd(text, expiration_date)
+                new_private_ad.publishing_ad()
             elif (publication_data['type']) == 'blog post':
                 author = publication_data['author']
                 title = publication_data['title']
                 tag = publication_data['tag']
                 text = publication_data['text']
+                new_blogpost = BlogPost(text, title, author, tag)
+                new_blogpost.publishing_post()
                 print('It`s blog post')
             else:
                 print('Unknown type')
@@ -157,24 +175,35 @@ class xmlReading:
         return True
 
     def read_xmlfile(filepath):
-        with open('filepath', 'r') as xml_file:
-            publication_data = ET.parse(filepath)
-            print(publication_data)
-            #if (publication_data['type']) == 'news':
-            #    print('It`s news')
-            #    city = publication_data['city']
-            #    text = publication_data['text']
-            #elif (publication_data['type']) == 'private ad':
-            #    print('It`s private ad')
-            #    text = publication_data['text']
-            #elif (publication_data['type']) == 'blog post':
-            #    author = publication_data['author']
-            #    title = publication_data['title']
-            #    tag = publication_data['tag']
-            #    text = publication_data['text']
-            #    print('It`s blog post')
-            #else:
-            #    print('Unknown type')
+        with open(filepath, 'r') as xml_file:
+            tree = ET.parse(filepath)
+            root = tree.getroot()
+            for child in root:
+                print(child.tag, child.text)
+            type = root.find("type").text
+
+            if type.lower() == 'news':
+                city = root.find("city").text
+                text = root.find("text").text
+                new_news = News(text, city)
+                new_news.publishing_news()
+
+            elif type.lower() == 'private ad':
+                text = root.find("text").text
+                expiration_date = root.find("expiration_date").text
+                new_private_ad = PrivateAd(text, expiration_date)
+                new_private_ad.publishing_ad()
+
+            elif type.lower() == 'blog post':
+                author = root.find("author").text
+                title = root.find("title").text
+                tag = root.find("tag").text
+                text = root.find("text").text
+                new_blogpost = BlogPost(text, title, author, tag)
+                new_blogpost.publishing_post()
+
+            else:
+                print('Unknown type')
 
 
 class Normalization:
@@ -390,10 +419,10 @@ class Main:
                 checkXMLfile = xmlReading
                 isxmlfile = checkXMLfile.validateXML(filepath)
                 if isJsonFile:
-                    read_jsonfile(filepath)
+                    checkJSONfile.read_jsonfile(filepath)
                 elif isxmlfile:
                     print('This is XML')
-                    read_xmlfile(filepath)
+                    checkXMLfile.read_xmlfile(filepath)
                 else:
                     upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
@@ -407,10 +436,10 @@ class Main:
                 checkXMLfile = xmlReading
                 isxmlfile = checkXMLfile.validateXML(filepath)
                 if isJsonFile:
-                    read_jsonfile(filepath)
+                    checkJSONfile.read_jsonfile(filepath)
                 elif isxmlfile:
                     print('This is XML')
-                    read_xmlfile(filepath)
+                    checkXMLfile.read_xmlfile(filepath)
                 else:
                     upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
