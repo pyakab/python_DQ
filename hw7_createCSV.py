@@ -214,7 +214,8 @@ class main():
                     print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
                     break
                 if (expiration_date - current_date).days < 0:
-                    print(f'Wrong date was input - {deadline_date}\nPlease repeat the input of ad with the right date (later than today)')
+                    print(f"Wrong date was input - {deadline_date}\n"
+                          f"Please repeat the input of ad with the right date (later than today)")
                     break
                 else:
                     pass

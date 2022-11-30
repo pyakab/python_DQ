@@ -1,0 +1,99 @@
+News------------
+ This is the first news in the feed
+Chicago, 2022-02-18
+
+Private ad------------
+Ldjhagflkjdaflajfla 
+Actual until: 2022-11-13 00:00:00, 267 days left.
+
+Private ad------------
+Kasjflaksjfalkfja 
+Actual until: 2022-01-02 00:00:00, -48 days left.
+
+Private ad------------
+This is a text of ad 
+Actual until: 2022-01-03 00:00:00, -47 days left.
+
+Private ad------------
+This is a new rivate ad 
+Actual until: 2023-11-12 00:00:00, 631 days left.
+
+Blog post------------
+ Post title # 1 
+ Author: Anna 
+ Check th text of this post 
+ Tag: Weather
+
+Private ad------------
+Test of the text 
+Actual until: 2022-02-22 00:00:00, 3 days left.
+
+News------------
+ Yujjhgjyhg
+Jghgjh, 2022-02-23news------------
+ <_io.tExtiowrapper name='c:/users/anna_kabanova/pycharmproject/python_dqe/file1.tXt' mode='r' encoding='cp1252'>
+
+News------------
+ ['test.\N', 'this is the first file in the text file.\N', '\n', '\n', 'test # 2.\N', 'this is the second file in the file.\N', '\n', '\n']
+
+
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29
+
+News------------
+ The most epic news all over the world.
+Paris, 2022-11-29
+
+Private ad------------
+Hi! it`s me 
+Actual until: 2022-12-05 00:00:00, 5 days left.
+
+Blog post------------
+ Test of the blog post 
+ Author: Topblogger 
+ Here you can read the text of the post 
+ Tag: Weather
+
+Private ad------------
+Is the.. Still exist? 
+Actual until: 2023-02-24 00:00:00, 85 days left.
+
+Private ad------------
+What is your biggest wish? 
+Actual until: 2023-01-01 00:00:00, 31 days left.
+
+Blog post------------
+ Not important 
+ Author: Meme dodo 
+ The important message aren`t found here.
+ Tag: Spam
+
+Private ad------------
+New furniture 
+Actual until: 2022-12-11 00:00:00, 10 days left.
+
+Private ad------------
+Thy this tool 
+Actual until: 2022-12-15 00:00:00, 14 days left.
+
+Blog post------------
+ Happy new year 
+ Author: Momo sallivan 
+ Who are you? 
+ Tag: Wishes
+
+Blog post------------
+ New year wishes 
+ Author: Santa claus 
+ Ho-ho-ho. Do you have a christmas tree? 
+ Tag: Presents
+
+News------------
+ The beaver is great
+Riga, 2022-11-30
