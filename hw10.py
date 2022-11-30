@@ -54,57 +54,6 @@ class BlogPost(Publication):
                 f"\n\nBlog post------------\n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
 
 
-class dbConnection:
-
-    def __init__(self):
-
-    def add_to_table(self, tablename):
-        self.tablename = tablename
-
-    def select_from_table(self, tablename):
-        self.tablename = tablename
-        return f
-        {self.result}
-
-
-class News(Publication):
-
-    def add_to_table(self, tablename):
-        dbConnection.add_to_table(self, tablename)
-
-    def add_to_table_news(self):
-        news_date = date.today()
-        cursor.execute('CREATE TABLE IF NOT EXISTS news (city text, date text, text text)')
-
-    cursor.execute("SELECT * FROM news WHERE city = ? AND date = ? AND text = ?", (city, news_date, text))
-
-    result = cursor.fetchall()
-
-    if result == '':
-        cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
-    else:
-        print('Entry is not unique')
-
-
-class PrivateAd(Publication):
-
-    def add_to_table(self, tablename):
-        dbConnection.add_to_table(self, tablename)
-
-    def add_to_table_privatead(self):
-        cursor.execute('CREATE TABLE IF NOT EXISTS privatead (text text, expiration_date text, author text, tag text')
-        cursor.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND author = ? AND tag = ?",
-                       (text, expiration_date, author, tag))
-
-    result = cursor.fetchall()
-
-    if result == '':
-        cursor.execute("INSERT INTO news (text, expiration_date, author, date) VALUES(?,?,?,?)",
-                       (text, expiration_date, author, date))
-    else:
-        print('Entry is not unique')
-
-
 class FileUpload(Publication):
 
     def __init__(self, filepath, text):
@@ -170,29 +119,47 @@ class FileUpload(Publication):
 
 class JSONReading:
 
-    def validateJSON(filepath):
+    def validateJSON(self, filepath):
         try:
             json.loads(filepath)
         except ValueError as err:
             return False
         return True
 
-    def read_jsonfile(filepath):
-        with open('filepath', 'r') as json_file:
+    def read_jsonfile(self):
+        with open(self.filepath, 'r') as json_file:
             publication_data = json.load(json_file)
             print(publication_data)
             if (publication_data['type']) == 'news':
                 print('It`s news')
                 city = publication_data['city']
                 text = publication_data['text']
+                new_news = News(text, city)
+                new_news.publishing_news()
             elif (publication_data['type']) == 'private ad':
                 print('It`s private ad')
                 text = publication_data['text']
+                deadline_date = publication_data['deadline date']
+                try:
+                    expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
+                except:
+                    print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
+
+                if (expiration_date - current_date).days < 0:
+                    print(
+                        f'Wrong date was input - {deadline_date}\n'
+                        f'Please repeat the input of ad with the right date (later than today)')
+                else:
+                    pass
+                new_private_ad = PrivateAd(text, expiration_date)
+                new_private_ad.publishing_ad()
             elif (publication_data['type']) == 'blog post':
                 author = publication_data['author']
                 title = publication_data['title']
                 tag = publication_data['tag']
                 text = publication_data['text']
+                new_blogpost = BlogPost(text, title, author, tag)
+                new_blogpost.publishing_post()
                 print('It`s blog post')
             else:
                 print('Unknown type')
@@ -208,24 +175,35 @@ class xmlReading:
         return True
 
     def read_xmlfile(filepath):
-        with open('filepath', 'r') as xml_file:
-            publication_data = ET.parse(filepath)
-            print(publication_data)
-            #if (publication_data['type']) == 'news':
-            #    print('It`s news')
-            #    city = publication_data['city']
-            #    text = publication_data['text']
-            #elif (publication_data['type']) == 'private ad':
-            #    print('It`s private ad')
-            #    text = publication_data['text']
-            #elif (publication_data['type']) == 'blog post':
-            #    author = publication_data['author']
-            #    title = publication_data['title']
-            #    tag = publication_data['tag']
-            #    text = publication_data['text']
-            #    print('It`s blog post')
-            #else:
-            #    print('Unknown type')
+        with open(filepath, 'r') as xml_file:
+            tree = ET.parse(filepath)
+            root = tree.getroot()
+            for child in root:
+                print(child.tag, child.text)
+            type = root.find("type").text
+
+            if type.lower() == 'news':
+                city = root.find("city").text
+                text = root.find("text").text
+                new_news = News(text, city)
+                new_news.publishing_news()
+
+            elif type.lower() == 'private ad':
+                text = root.find("text").text
+                expiration_date = root.find("expiration_date").text
+                new_private_ad = PrivateAd(text, expiration_date)
+                new_private_ad.publishing_ad()
+
+            elif type.lower() == 'blog post':
+                author = root.find("author").text
+                title = root.find("title").text
+                tag = root.find("tag").text
+                text = root.find("text").text
+                new_blogpost = BlogPost(text, title, author, tag)
+                new_blogpost.publishing_post()
+
+            else:
+                print('Unknown type')
 
 
 class Normalization:
@@ -436,11 +414,15 @@ class Main:
             if os.path.isfile(inputfilepath):
                 filepath = inputfilepath
                 print('Exists')
-                checkJSONfile = JSONReading(filepath)
+                checkJSONfile = JSONReading
                 isJsonFile = checkJSONfile.validateJSON(filepath)
+                checkXMLfile = xmlReading
+                isxmlfile = checkXMLfile.validateXML(filepath)
                 if isJsonFile:
-                    read_jsonfile(filepath)
-
+                    checkJSONfile.read_jsonfile(filepath)
+                elif isxmlfile:
+                    print('This is XML')
+                    checkXMLfile.read_xmlfile(filepath)
                 else:
                     upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
@@ -449,16 +431,19 @@ class Main:
             elif os.path.isfile(fileinput):
                 filepath = fileinput
                 print('Another directory')
+                checkJSONfile = JSONReading
                 isJsonFile = checkJSONfile.validateJSON(filepath)
+                checkXMLfile = xmlReading
+                isxmlfile = checkXMLfile.validateXML(filepath)
                 if isJsonFile:
-                    read_jsonfile(filepath)
+                    checkJSONfile.read_jsonfile(filepath)
+                elif isxmlfile:
+                    print('This is XML')
+                    checkXMLfile.read_xmlfile(filepath)
                 else:
                     upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
                     upload_to_print.delete_file()
-                upload_to_print = FileUpload(filepath)
-                upload_to_print.publishing_from_file()
-                upload_to_print.delete_file()
             else:
                 print('Not exist')
                 break
