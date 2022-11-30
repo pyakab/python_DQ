@@ -136,14 +136,32 @@ class JSONReading:
                 print('It`s news')
                 city = publication_data['city']
                 text = publication_data['text']
+                new_news = News(text, city)
+                new_news.publishing_news()
             elif (publication_data['type']) == 'private ad':
                 print('It`s private ad')
                 text = publication_data['text']
+                deadline_date = publication_data['deadline date']
+                try:
+                    expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
+                except:
+                    print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
+
+                if (expiration_date - current_date).days < 0:
+                    print(
+                        f'Wrong date was input - {deadline_date}\n'
+                        f'Please repeat the input of ad with the right date (later than today)')
+                else:
+                    pass
+                new_private_ad = PrivateAd(text, expiration_date)
+                new_private_ad.publishing_ad()
             elif (publication_data['type']) == 'blog post':
                 author = publication_data['author']
                 title = publication_data['title']
                 tag = publication_data['tag']
                 text = publication_data['text']
+                new_blogpost = BlogPost(text, title, author, tag)
+                new_blogpost.publishing_post()
                 print('It`s blog post')
             else:
                 print('Unknown type')
