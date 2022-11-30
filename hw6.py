@@ -283,7 +283,7 @@ if __name__ == "__main__":
 # Line 4: empty
 # Line 5: type of publication etc.
 # Process line by line. If some error - do not add records to file
-# and do not delete the file.
+# and do not delete the file
 
 # Minor mistakes, correct if time permits:
 # 1.Define your input format (one or many records) - not done. You can make realization for
