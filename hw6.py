@@ -56,9 +56,6 @@ class FileUpload(Publication):
         self.filepath = filepath
 
     def publishing_from_file(self):
-        # with open(self.filepath, 'r') as f:
-        #    filetext = f.read()
-        # print(filetext)
         with open(self.filepath) as f:
             for line in f:
                 line = line.lower()
@@ -110,8 +107,6 @@ class FileUpload(Publication):
                 else:
                     print('Text have the wrong format')
 
-        # with open("news_feed.txt", "a") as text_file:
-        #    text_file.write(f"\n\n{filetext}")
 
     def delete_file(self):
         file_for_delete = self.filepath

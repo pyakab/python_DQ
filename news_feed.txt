@@ -53,3 +53,47 @@ Paris, 2022-11-29
 Private ad------------
 Hi! It`s me 
 Actual until: 2022-12-05 00:00:00, 5 days left.
+
+Blog post------------
+ Test of the blog post 
+ Author: topblogger 
+ Here you can read the text of the post 
+ tag: weather
+
+Private ad------------
+Is the ..  still Exist? 
+Actual until: 2023-02-24 00:00:00, 85 days left.
+
+Private ad------------
+What is your biggest wish? 
+Actual until: 2023-01-01 00:00:00, 31 days left.
+
+Blog post------------
+ not Important 
+ Author: Meme dodo 
+ The important message Aren`t found here. 
+ tag: spam
+
+Private ad------------
+New furniture 
+Actual until: 2022-12-11 00:00:00, 10 days left.
+
+Private ad------------
+Thy this tool 
+Actual until: 2022-12-15 00:00:00, 14 days left.
+
+Blog post------------
+ HAppY new Year 
+ Author: Momo Sallivan 
+ Who are you? 
+ tag: wishes
+
+Blog post------------
+ New Year wishes 
+ Author: Santa Claus 
+ Ho-Ho-ho. Do You have a Christmas tree? 
+ tag: presents
+
+News------------
+ The beaVer is great
+Riga, 2022-11-30
