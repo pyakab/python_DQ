@@ -118,6 +118,12 @@ class FileUpload(Publication):
         os.remove(file_for_delete)
 
 
+class DBConnection:
+
+    def select(self):
+
+    def insert(self):
+
 class JSONReading:
 
     def validateJSON(self, filepath):
