@@ -119,7 +119,7 @@ class FileUpload(Publication):
 
 class JSONReading:
 
-    def validateJSON(filepath):
+    def validateJSON(self, filepath):
         try:
             json.loads(filepath)
         except ValueError as err:
