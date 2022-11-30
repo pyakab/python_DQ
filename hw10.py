@@ -4,6 +4,7 @@ import os.path
 import csv
 import json
 import xml.etree.ElementTree as ET
+import sqlite3
 
 
 current_date = datetime.today()
