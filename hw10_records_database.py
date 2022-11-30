@@ -1,9 +1,10 @@
-import csv
-import json
+from datetime import date, datetime
 import os
 import os.path
-from datetime import date, datetime
-import sqlite3
+import csv
+import json
+import xml.etree.ElementTree as ET
+
 
 current_date = datetime.today()
 
@@ -118,61 +119,82 @@ class FileUpload(Publication):
 
 class JSONReading:
 
-    def __init__(self, filepath):
-        self.filepath = filepath
+    def validateJSON(filepath):
+        try:
+            json.loads(filepath)
+        except ValueError as err:
+            return False
+        return True
 
-    def validate_json(self, filepath):
-        with open(self.filepath, 'r') as json_file:
-            try:
-                json.load(json_file)
-            except ValueError as err:
-                return False
-            return True
-
-    def read_jsonfile(self):
-        with open(self.filepath, 'r') as json_file:
+    def read_jsonfile(filepath):
+        with open('filepath', 'r') as json_file:
             publication_data = json.load(json_file)
             print(publication_data)
             if (publication_data['type']) == 'news':
                 print('It`s news')
                 city = publication_data['city']
                 text = publication_data['text']
-                new_news = News(text, city)
-                new_news.publishing_news()
             elif (publication_data['type']) == 'private ad':
                 print('It`s private ad')
                 text = publication_data['text']
-                deadline_date = publication_data['deadline date']
-                try:
-                    expiration_date = datetime.strptime(deadline_date, '%Y/%m/%d')
-                except:
-                    print('Wrong date format!\nPlease repeat the input of ad with the right date format(yyyy/mm/dd)')
-
-                if (expiration_date - current_date).days < 0:
-                    print(
-                        f'Wrong date was input - {deadline_date}\n'
-                        f'Please repeat the input of ad with the right date (later than today)')
-                else:
-                    pass
-                new_private_ad = PrivateAd(text, expiration_date)
-                new_private_ad.publishing_ad()
             elif (publication_data['type']) == 'blog post':
                 author = publication_data['author']
                 title = publication_data['title']
                 tag = publication_data['tag']
                 text = publication_data['text']
-                new_blogpost = BlogPost(text, title, author, tag)
-                new_blogpost.publishing_post()
                 print('It`s blog post')
             else:
                 print('Unknown type')
 
-class DBConnection:
+
+class xmlReading:
+
+    def validateXML(filepath):
+        try:
+            ET.parse(filepath)
+        except ValueError as err:
+            return False
+        return True
+
+    def read_xmlfile(filepath):
+        with open('filepath', 'r') as xml_file:
+            publication_data = ET.parse(filepath)
+            print(publication_data)
+            #if (publication_data['type']) == 'news':
+            #    print('It`s news')
+            #    city = publication_data['city']
+            #    text = publication_data['text']
+            #elif (publication_data['type']) == 'private ad':
+            #    print('It`s private ad')
+            #    text = publication_data['text']
+            #elif (publication_data['type']) == 'blog post':
+            #    author = publication_data['author']
+            #    title = publication_data['title']
+            #    tag = publication_data['tag']
+            #    text = publication_data['text']
+            #    print('It`s blog post')
+            #else:
+            #    print('Unknown type')
+
+
+class dbConnection:
 
     def __init__(self):
 
     def add_to_table(self):
         return f"{result}"
+
+    def select_from_table(self):
+
+        cursor.execute("SELECT * FROM news WHERE city = ? AND date = ? AND text = ?", (city, date, text))
+
+        result = cursor.fetchall()
+
+        if result == '':
+            cursor.execute("INSERT INTO news (city, date, text) VALUES( ?,?,?)", (city, date, text))
+        else:
+            print('Entry is not unique')
+
 
 class Normalization:
 
@@ -382,24 +404,32 @@ class Main:
             if os.path.isfile(inputfilepath):
                 filepath = inputfilepath
                 print('Exists')
-                checkjsonfile = JSONReading(filepath)
-                isJsonFile = checkjsonfile.validate_json(filepath)
-                print(isJsonFile)
-                if isJsonFile == True:
-                    checkjsonfile.read_jsonfile()
+                checkJSONfile = JSONReading
+                isJsonFile = checkJSONfile.validateJSON(filepath)
+                checkXMLfile = xmlReading
+                isxmlfile = checkXMLfile.validateXML(filepath)
+                if isJsonFile:
+                    read_jsonfile(filepath)
+                elif isxmlfile:
+                    print('This is XML')
+                    read_xmlfile(filepath)
                 else:
-                    upload_to_print = FileUpload()
+                    upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
                     upload_to_print.delete_file()
 
             elif os.path.isfile(fileinput):
                 filepath = fileinput
                 print('Another directory')
-                checkjsonfile = JSONReading(filepath)
-                isJsonFile = checkjsonfile.validate_json(filepath)
-                print(isJsonFile)
-                if isJsonFile == True:
-                    checkjsonfile.read_jsonfile()
+                checkJSONfile = JSONReading
+                isJsonFile = checkJSONfile.validateJSON(filepath)
+                checkXMLfile = xmlReading
+                isxmlfile = checkXMLfile.validateXML(filepath)
+                if isJsonFile:
+                    read_jsonfile(filepath)
+                elif isxmlfile:
+                    print('This is XML')
+                    read_xmlfile(filepath)
                 else:
                     upload_to_print = FileUpload(filepath)
                     upload_to_print.publishing_from_file()
