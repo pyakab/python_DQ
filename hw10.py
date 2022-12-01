@@ -23,19 +23,10 @@ class News(Publication):
         Publication.__init__(self, text)
         self.city = city
 
-    def publishing_news(self, text, city):
+    def publishing_news(self):
         news_date = date.today()
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
-
-        newstable_connection=DBConnection('publication.db')
-        tablename = 'news'
-        newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
-        if newstable_result == '':
-            newstable_connection.insert(tablename, self.text,self.city,news_date)
-        else:
-            print('Entry is not unique')
-
 
 
 class PrivateAd(Publication):
@@ -135,9 +126,13 @@ class DBConnection:
     def insert(self, tablename):
         self.tablename = tablename
 
+    def select(self, tablename):
+        self.tablename = tablename
+
 
 class News(DBConnection):
     def __init__(self, database):
+        DBConnection.__init__(self,database)
         with sqlite3.connect(database) as self.conn:
             self.cur = self.conn.cursor()
 
@@ -451,8 +446,15 @@ class Main:
                 # print(f'Your answer is:\n{filepath}')
                 # upload_to_print = FileUpload(filepath)
                 # upload_to_print.publishing_from_file()
-                new_news = News(text, city)
+                new_news = News(text,city)
                 new_news.publishing_news()
+                newstable_connection = DBConnection('publication.db')
+                tablename = 'news'
+                newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
+                if newstable_result == '':
+                    newstable_connection.insert(tablename, self.text, self.city, news_date)
+                else:
+                    print('Entry is not unique')
             elif answer.lower() == 'private ad':
                 print('When is the deadline of this ad? (yyyy/mm/dd)')
                 deadline_date = input()
