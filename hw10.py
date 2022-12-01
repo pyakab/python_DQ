@@ -23,16 +23,16 @@ class News(Publication):
         Publication.__init__(self, text)
         self.city = city
 
-    def publishing_news(self):
+    def publishing_news(self, text, city):
         news_date = date.today()
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
 
         newstable_connection=DBConnection('publication.db')
         tablename = 'news'
-        newstable_result = newstable_connection.select(tablename,text,city,news_date)
-        if result == '':
-            newstable_connection.insert(tablename, text,city,news_date)
+        newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
+        if newstable_result == '':
+            newstable_connection.insert(tablename, self.text,self.city,news_date)
         else:
             print('Entry is not unique')
 
@@ -146,13 +146,11 @@ class News(DBConnection):
         self.text = text
         self.city = city
         self.news_date = news_date
-        self.cur.execute('CREATE TABLE IF NOT EXISTS news (city text, news_date text, text text)')
-        self.cur.execute("SELECT * FROM news WHERE city = ? AND news_date = ? AND text = ?", (city, news_date, text)
+        self.cur.execute("CREATE TABLE IF NOT EXISTS tablename (city text, news_date text, text text)")
+        self.cur.execute("SELECT * FROM tablename WHERE city = ? AND news_date = ? AND text = ?", (city, news_date, text))
         result = self.cur.fetchall()
-        return result
 
-
-   def insert(self, tablename, city, news_date, text):
+    def insert(self, tablename, city, news_date, text):
         self.tablename = tablename
         self.text = text
         self.city = city
@@ -168,8 +166,8 @@ class PrivateAd(DBConnection):
         self.tablename = tablename
         self.expiration_date = expiration_date
         self.text = text
-        self.cur.execute('CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)')
-        self.cur.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration_date)
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)")
+        self.cur.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration_date))
         result = self.cur.fetchall()
         return result
 
@@ -202,7 +200,7 @@ class BlogPost(DBConnection):
         self.title = title
         self.author = author
         self.tag = tag
-        self.cur.execute("INSERT INTO tablename (text, expiration_date) VALUES( ?,?)", (text, expiration_date))
+        self.cur.execute("INSERT INTO tablename (title, text, author, tag) VALUES( ?,?)", (title, text, author, tag))
 
 
 class JSONReading:
