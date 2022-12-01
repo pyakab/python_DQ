@@ -27,7 +27,6 @@ class News(Publication):
         news_date = date.today()
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
-
         newstable_connection = NewsTable('publication.db')
         tablename = 'news'
         newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
@@ -48,7 +47,14 @@ class PrivateAd(Publication):
         with open("news_feed.txt", "a") as text_file:
             text_file.write(
                 f"\n\nPrivate ad------------\n{self.text} \nActual until: {self.expiration_date}, {ndays} days left.")
-
+        privatead_connection = PrivateAdTable('publication.db')
+        tablename = 'private_ad'
+        privateadtable_result = privatead_connection.select(tablename, self.text, self.text, self.expiration_date)
+        print(privateadtable_result)
+        if privateadtable_result == None:
+            privatead_connection.insert(tablename, self.text, self.text, self.expiration_date)
+        else:
+            print('Entry is not unique')
 
 class BlogPost(Publication):
     def __init__(self, text, title, author, tag):
@@ -62,7 +68,14 @@ class BlogPost(Publication):
         with open("news_feed.txt", "a") as text_file:
             text_file.write(
                 f"\n\nBlog post------------\n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
-
+        blogposttable_connection = BlogPostTable('publication.db')
+        tablename = 'private_ad'
+        blogposttable_result = blogposttable_connection.select(tablename, self.title, self.text, self.author, self.tag)
+        print(blogposttable_result)
+        if blogposttable_result == None:
+            blogposttable_connection.insert(tablename, self.title, self.text, self.author, self.tag)
+        else:
+            print('Entry is not unique')
 
 class DBConnection:
     def __init__(self, database):
@@ -456,11 +469,6 @@ class Main:
                 city = input()
                 print('Print the text of the news')
                 text = input()
-                # print('Input the filepath:')
-                # filepath = input()
-                # print(f'Your answer is:\n{filepath}')
-                # upload_to_print = FileUpload(filepath)
-                # upload_to_print.publishing_from_file()
                 new_news = News(text, city)
                 new_news.publishing_news(text, city)
             elif answer.lower() == 'private ad':
