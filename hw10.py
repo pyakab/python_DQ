@@ -23,10 +23,19 @@ class News(Publication):
         Publication.__init__(self, text)
         self.city = city
 
-    def publishing_news(self):
+    def publishing_news(self, text, city):
         news_date = date.today()
         with open("news_feed.txt", "a") as text_file:
             text_file.write(f"\n\nNews------------\n {self.text}\n{self.city}, {news_date}")
+
+        newstable_connection = NewsTable('publication.db')
+        tablename = 'news'
+        newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
+        print(newstable_result)
+        if newstable_result == None:
+            newstable_connection.insert(tablename, self.text, self.city, news_date)
+        else:
+            print('Entry is not unique')
 
 
 class PrivateAd(Publication):
@@ -55,6 +64,91 @@ class BlogPost(Publication):
                 f"\n\nBlog post------------\n {self.title} \n Author: {self.author} \n {self.text} \n tag: {self.tag}")
 
 
+class DBConnection:
+    def __init__(self, database):
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
+
+    def insert(self, tablename):
+        self.tablename = tablename
+
+    def select(self, tablename):
+        self.tablename = tablename
+
+
+class NewsTable(DBConnection):
+    def __init__(self, database):
+        DBConnection.__init__(self, database)
+        self.database = database
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
+
+    def select(self, tablename, text, city, news_date):
+        self.tablename = tablename
+        self.text = text
+        self.city = city
+        self.news_date = news_date
+        self.cur.execute("CREATE TABLE IF NOT EXISTS tablename (city text, news_date text, text text)")
+        self.cur.execute("SELECT * FROM tablename WHERE city = ? AND news_date = ? AND text = ?", (city, news_date, text))
+        self.database.autocommit(True)
+        result = self.cur.fetchall()
+
+    def insert(self, tablename, city, news_date, text):
+        self.tablename = tablename
+        self.text = text
+        self.city = city
+        self.news_date = news_date
+        self.cur.execute("INSERT INTO tablename (city, news_date, text) VALUES( ?,?,?)", (city, news_date, text))
+        self.database.autocommit(True)
+
+class PrivateAdTable(DBConnection):
+    def __init__(self, database):
+        super().__init__(database)
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
+
+    def select(self, tablename, expiration_date, text):
+        self.tablename = tablename
+        self.expiration_date = expiration_date
+        self.text = text
+        self.cur.execute("CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)")
+        self.cur.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration_date))
+        result = self.cur.fetchall()
+        return result
+
+    def insert(self, tablename, expiration_date, text):
+        self.tablename = tablename
+        self.text = text
+        self.expiration_date = expiration_date
+        self.cur.execute("INSERT INTO tablename (text,expiration_date) VALUES( ?,?,?)", (text,expiration_date))
+
+class BlogPostTable(DBConnection):
+    def __init__(self, database):
+        super().__init__(database)
+        with sqlite3.connect(database) as self.conn:
+            self.cur = self.conn.cursor()
+
+    def select(self, tablename, text, title, author, tag):
+        self.tablename = tablename
+        self.text = text
+        self.title = title
+        self.author = author
+        self.tag = tag
+        self.cur.execute('CREATE TABLE IF NOT EXISTS tablename (title text, text text, author text, tag text')
+        self.cur.execute("SELECT * FROM news WHERE title = ? AND text = ? AND author = ? AND tag = ?",
+                       (title, text, author, tag))
+        result = self.cur.fetchall()
+        return result
+
+    def insert(self, tablename, text, title, author, tag):
+        self.tablename = tablename
+        self.text = text
+        self.title = title
+        self.author = author
+        self.tag = tag
+        self.cur.execute("INSERT INTO tablename (title, text, author, tag) VALUES( ?,?)", (title, text, author, tag))
+
+
 class FileUpload(Publication):
 
     def __init__(self, filepath, text):
@@ -72,7 +166,7 @@ class FileUpload(Publication):
                         text = next(f).strip()
                         print(text)
                         new_news = News(text, city)
-                        new_news.publishing_news()
+                        new_news.publishing_news(text, city)
                     else:
                         print('File has the wrong format')
                         break
@@ -118,89 +212,10 @@ class FileUpload(Publication):
         os.remove(file_for_delete)
 
 
-class DBConnection:
-    def __init__(self, database):
-        with sqlite3.connect(database) as self.conn:
-            self.cur = self.conn.cursor()
-
-    def insert(self, tablename):
-        self.tablename = tablename
-
-    def select(self, tablename):
-        self.tablename = tablename
-
-
-class News(DBConnection):
-    def __init__(self, database):
-        DBConnection.__init__(self,database)
-        with sqlite3.connect(database) as self.conn:
-            self.cur = self.conn.cursor()
-
-    def select(self, tablename, text, city, news_date):
-        self.tablename = tablename
-        self.text = text
-        self.city = city
-        self.news_date = news_date
-        self.cur.execute("CREATE TABLE IF NOT EXISTS tablename (city text, news_date text, text text)")
-        self.cur.execute("SELECT * FROM tablename WHERE city = ? AND news_date = ? AND text = ?", (city, news_date, text))
-        result = self.cur.fetchall()
-
-    def insert(self, tablename, city, news_date, text):
-        self.tablename = tablename
-        self.text = text
-        self.city = city
-        self.news_date = news_date
-        self.cur.execute("INSERT INTO tablename (city, news_date, text) VALUES( ?,?,?)", (city, news_date, text))
-
-class PrivateAd(DBConnection):
-    def __init__(self, database):
-        with sqlite3.connect(database) as self.conn:
-            self.cur = self.conn.cursor()
-
-    def select(self, tablename, expiration_date, text):
-        self.tablename = tablename
-        self.expiration_date = expiration_date
-        self.text = text
-        self.cur.execute("CREATE TABLE IF NOT EXISTS news (text text, expiration_date text)")
-        self.cur.execute("SELECT * FROM news WHERE text = ? AND expiration_date = ? AND text = ?", (text, expiration_date))
-        result = self.cur.fetchall()
-        return result
-
-    def insert(self, tablename, expiration_date, text):
-        self.tablename = tablename
-        self.text = text
-        self.expiration_date = expiration_date
-        self.cur.execute("INSERT INTO tablename (text,expiration_date) VALUES( ?,?,?)", (text,expiration_date))
-
-class BlogPost(DBConnection):
-    def __init__(self, database):
-        with sqlite3.connect(database) as self.conn:
-            self.cur = self.conn.cursor()
-
-    def select(self, tablename, text, title, author, tag):
-        self.tablename = tablename
-        self.text = text
-        self.title = title
-        self.author = author
-        self.tag = tag
-        self.cur.execute('CREATE TABLE IF NOT EXISTS tablename (title text, text text, author text, tag text')
-        self.cur.execute("SELECT * FROM news WHERE title = ? AND text = ? AND author = ? AND tag = ?",
-                       (title, text, author, tag))
-        result = self.cur.fetchall()
-        return result
-
-    def insert(self, tablename, text, title, author, tag):
-        self.tablename = tablename
-        self.text = text
-        self.title = title
-        self.author = author
-        self.tag = tag
-        self.cur.execute("INSERT INTO tablename (title, text, author, tag) VALUES( ?,?)", (title, text, author, tag))
-
-
 class JSONReading:
 
     def validateJSON(self, filepath):
+        self.filepath = filepath
         try:
             json.loads(filepath)
         except ValueError as err:
@@ -446,15 +461,8 @@ class Main:
                 # print(f'Your answer is:\n{filepath}')
                 # upload_to_print = FileUpload(filepath)
                 # upload_to_print.publishing_from_file()
-                new_news = News(text,city)
-                new_news.publishing_news()
-                newstable_connection = DBConnection('publication.db')
-                tablename = 'news'
-                newstable_result = newstable_connection.select(tablename, self.text, self.city, news_date)
-                if newstable_result == '':
-                    newstable_connection.insert(tablename, self.text, self.city, news_date)
-                else:
-                    print('Entry is not unique')
+                new_news = News(text, city)
+                new_news.publishing_news(text, city)
             elif answer.lower() == 'private ad':
                 print('When is the deadline of this ad? (yyyy/mm/dd)')
                 deadline_date = input()
